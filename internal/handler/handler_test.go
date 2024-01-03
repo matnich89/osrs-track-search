@@ -3,6 +3,7 @@ package handler
 import (
 	"bytes"
 	"encoding/json"
+	"errors"
 	"github.com/stretchr/testify/assert"
 	"go.uber.org/mock/gomock"
 	"io"
@@ -54,6 +55,20 @@ func TestSearchIronman(t *testing.T) {
 			expectedStatus: http.StatusOK,
 			expectedBody:   fileBytes,
 		},
+		{
+			name:      "not found",
+			character: "notFound",
+			responseFunc: func() {
+				mockClient.EXPECT().GetHighScores(gomock.Eq("notFound"), gomock.Eq(client.Ironman)).Return(nil, client.ErrNotFound)
+			},
+		},
+		{
+			name:      "other error",
+			character: "otherError",
+			responseFunc: func() {
+				mockClient.EXPECT().GetHighScores(gomock.Eq("otherError"), gomock.Eq(client.Ironman)).Return(nil, errors.New("some bad error"))
+			},
+		},
 	}
 
 	for _, tt := range tests {
@@ -70,13 +85,14 @@ func TestSearchIronman(t *testing.T) {
 
 			handler.SearchIronman(rr, req)
 
-			var actualStats model.CharStats
-			var expectedStats model.CharStats
+			if tt.expectedBody != nil {
+				var actualStats model.CharStats
+				var expectedStats model.CharStats
+				json.Unmarshal(tt.expectedBody, &expectedStats)
+				json.Unmarshal(rr.Body.Bytes(), &actualStats)
 
-			json.Unmarshal(tt.expectedBody, &expectedStats)
-			json.Unmarshal(rr.Body.Bytes(), &actualStats)
-
-			assert.Equal(t, expectedStats, actualStats)
+				assert.Equal(t, expectedStats, actualStats)
+			}
 
 		})
 	}
