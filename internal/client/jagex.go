@@ -3,6 +3,7 @@ package client
 import (
 	"errors"
 	"fmt"
+	"log"
 	"net/http"
 	"net/url"
 )
@@ -20,6 +21,8 @@ const (
 type Client interface {
 	GetHighScores(character string, highscoresType HighscoresType) (resp *http.Response, err error)
 }
+
+var ErrNotFound = errors.New("not found")
 
 type JagexClient struct {
 	httpClient *http.Client
@@ -45,6 +48,8 @@ func NewJagexClient(host string) (Client, error) {
 func (c *JagexClient) GetHighScores(character string, highscoresType HighscoresType) (resp *http.Response, err error) {
 	highscoresUrl := fmt.Sprintf(c.baseUrl, highscoresType, character)
 
+	log.Println(highscoresUrl)
+
 	req, err := http.NewRequest(http.MethodGet, highscoresUrl, nil)
 	if err != nil {
 		return nil, errors.New("could not create request")
@@ -56,6 +61,9 @@ func (c *JagexClient) GetHighScores(character string, highscoresType HighscoresT
 	}
 
 	if resp.StatusCode != http.StatusOK {
+		if resp.StatusCode == http.StatusNotFound {
+			return nil, ErrNotFound
+		}
 		return nil, errors.New("bad response from jagex")
 	}
 
