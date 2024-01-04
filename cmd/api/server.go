@@ -11,7 +11,7 @@ import (
 	"time"
 )
 
-func (a *app) Serve() error {
+func (a *App) Serve() error {
 
 	srv := &http.Server{
 		Addr:         ":8080",

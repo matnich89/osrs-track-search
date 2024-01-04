@@ -5,15 +5,15 @@ import (
 	"osrs-track-search/internal/handler"
 )
 
-type app struct {
+type App struct {
 	router  *chi.Mux
 	handler *handler.Handler
 }
 
-func NewApp(router *chi.Mux, handler *handler.Handler) *app {
-	return &app{router: router, handler: handler}
+func NewApp(router *chi.Mux, handler *handler.Handler) *App {
+	return &App{router: router, handler: handler}
 }
 
-func (a *app) routes() {
+func (a *App) routes() {
 	a.router.Get("/ironman", a.handler.SearchIronman)
 }

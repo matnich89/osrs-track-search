@@ -4,7 +4,7 @@ RUN mkdir /app
 ADD . /app
 WORKDIR /app
 
-RUN CGO_ENABLED=0 GOOS=linux go build -o app cmd/*.go
+RUN CGO_ENABLED=0 GOOS=linux go build -o app main.go
 
 EXPOSE 8080
 
