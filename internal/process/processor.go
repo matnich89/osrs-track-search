@@ -2,6 +2,7 @@ package process
 
 import (
 	"bufio"
+	"errors"
 	"io"
 	"osrs-track-search/model"
 	"strconv"
@@ -52,10 +53,10 @@ func (p *SkillsProcessor) Process(character string, body io.ReadCloser) (*model.
 		return nil, err
 	}
 
-	return &stats, err
+	return stats, err
 }
 
-func (p *SkillsProcessor) convertStatsToHighScores(character string, body io.ReadCloser) (model.CharStats, error) {
+func (p *SkillsProcessor) convertStatsToHighScores(character string, body io.ReadCloser) (*model.CharStats, error) {
 	scanner := bufio.NewScanner(body)
 	var i = 0
 	var stats []model.Stat
@@ -79,10 +80,14 @@ func (p *SkillsProcessor) convertStatsToHighScores(character string, body io.Rea
 		}
 	}
 
+	if stats == nil {
+		return nil, errors.New("could not parse response")
+	}
+
 	char := model.CharStats{
 		Character: character,
 		Stats:     stats,
 	}
 
-	return char, nil
+	return &char, nil
 }

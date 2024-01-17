@@ -15,6 +15,5 @@ func NewApp(router *chi.Mux, handler *handler.Handler) *App {
 }
 
 func (a *App) routes() {
-
 	a.router.Get("/ironman", a.handler.SearchIronman)
 }
