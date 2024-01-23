@@ -1,0 +1,14 @@
+version: '3'
+services:
+  app:
+    build: .
+    ports:
+      - 8080:8080
+    depends_on:
+      - nats
+    environment:
+      - NATS_URL=nats://nats:4222
+  nats:
+    image: nats:latest
+    ports:
+      - 4222:4222

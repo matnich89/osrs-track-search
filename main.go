@@ -22,6 +22,11 @@ func main() {
 
 	app := cmd.NewApp(router, h)
 
+	err = app.ConnectToNats()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	err = app.Serve()
 
 	if err != nil {
