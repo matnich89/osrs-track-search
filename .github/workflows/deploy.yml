@@ -47,4 +47,5 @@ jobs:
         with:
           context: .
           push: true
-          tags: us-east1-docker.pkg.dev/osrs-track/osrs-track-search/osrs-track-search:latest
+          tags: us-east1-docker.pkg.dev/osrs-track-412507/osrs-track-search/osrs-track-search:latest
+
