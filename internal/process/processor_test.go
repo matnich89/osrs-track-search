@@ -5,8 +5,8 @@ import (
 	"strings"
 	"testing"
 
+	"github.com/matnich89/osrs-track-search/model"
 	"github.com/stretchr/testify/assert"
-	"osrs-track-search/model"
 )
 
 func TestConvertStatsToHighScores(t *testing.T) {

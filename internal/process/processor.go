@@ -3,8 +3,8 @@ package process
 import (
 	"bufio"
 	"errors"
+	"github.com/matnich89/osrs-track-search/model"
 	"io"
-	"osrs-track-search/model"
 	"strconv"
 	"strings"
 )

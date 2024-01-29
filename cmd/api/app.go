@@ -3,11 +3,11 @@ package cmd
 import (
 	"errors"
 	"github.com/go-chi/chi/v5"
+	"github.com/matnich89/osrs-track-search/internal/handler"
 	"github.com/nats-io/nats.go"
 	"log"
 	"os"
 	"os/signal"
-	"osrs-track-search/internal/handler"
 	"syscall"
 )
 

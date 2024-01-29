@@ -8,6 +8,7 @@ services:
       - nats
     environment:
       - NATS_URL=nats://nats:4222
+      - JAGEX_HOST=https://secure.runescape.com
   nats:
     image: nats:latest
     ports:

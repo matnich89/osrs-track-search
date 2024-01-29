@@ -10,8 +10,8 @@
 package mocks
 
 import (
+	client "github.com/matnich89/osrs-track-search/internal/client"
 	http "net/http"
-	client "osrs-track-search/internal/client"
 	reflect "reflect"
 
 	gomock "go.uber.org/mock/gomock"

@@ -1,4 +1,4 @@
-module osrs-track-search
+module github.com/matnich89/osrs-track-search
 
 go 1.21
 

@@ -2,17 +2,24 @@ package main
 
 import (
 	"github.com/go-chi/chi/v5"
+	cmd "github.com/matnich89/osrs-track-search/cmd/api"
+	"github.com/matnich89/osrs-track-search/internal/client"
+	"github.com/matnich89/osrs-track-search/internal/handler"
 	"log"
-	cmd "osrs-track-search/cmd/api"
-	"osrs-track-search/internal/client"
-	"osrs-track-search/internal/handler"
+	"os"
 )
 
 func main() {
 
 	router := chi.NewMux()
 
-	c, err := client.NewJagexClient("https://secure.runescape.com")
+	jagexHost, ok := os.LookupEnv("JAGEX_HOST")
+
+	if !ok {
+		log.Fatal("could not find jagex host url")
+	}
+
+	c, err := client.NewJagexClient(jagexHost)
 
 	if err != nil {
 		log.Fatal(err)

@@ -3,9 +3,9 @@ package handler
 import (
 	"encoding/json"
 	"errors"
+	"github.com/matnich89/osrs-track-search/internal/client"
+	"github.com/matnich89/osrs-track-search/internal/process"
 	"net/http"
-	"osrs-track-search/internal/client"
-	"osrs-track-search/internal/process"
 )
 
 type Handler struct {
